@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const createBookingSchema = z.object({
-  roomId: z.string().uuid("Invalid room ID"),
+  roomId: z.guid("Invalid room ID"),
   checkIn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format (YYYY-MM-DD)"),
   checkOut: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format (YYYY-MM-DD)"),
   adults: z.number().int().min(1, "At least 1 adult required"),

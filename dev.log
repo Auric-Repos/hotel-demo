@@ -1,0 +1,66 @@
+
+> auric-hotel@0.1.0 dev
+> next dev
+
+▲ Next.js 16.4.2 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.100:3000
+✓ Ready in 1105ms
+✓ Running next.config.ts took 117ms
+- Cache Components enabled
+- Partial Prefetching enabled
+
+  Reload env: .env
+  Reload env: .env
+✓ Compiled in 233ms
+  Turbopack has seen frequent file updates and is waiting for the filesystem to settle (0.5s elapsed so far; last modified: "\\\\?\\D:\\AURIC\\auric-hotel\\node_modules\\ajv\\dist\\vocabularies\\dynamic").
+Attention: Clerk collects telemetry data from its SDKs when connected to development instances.
+The data collected is used to inform Clerk's product roadmap.
+To learn more, including how to opt-out from the telemetry program, visit: https://clerk.com/docs/telemetry.
+
+○ Compiling /[locale] ...
+ GET /en 200 in 14.0s (next.js: 11.5s, proxy.ts: 30ms, generate-params: 1209ms, application-code: 1260ms)
+ GET /ar 200 in 502ms (next.js: 215ms, proxy.ts: 50ms, generate-params: 22ms, application-code: 214ms)
+ GET /en 200 in 191ms (next.js: 27ms, proxy.ts: 24ms, generate-params: 16ms, application-code: 125ms)
+✓ Compiled in 1620ms
+ GET /en 500 in 5.2s (next.js: 4.8s, proxy.ts: 283ms, generate-params: 29ms, application-code: 133ms)
+ GET /en 500 in 546ms (next.js: 424ms, proxy.ts: 46ms, application-code: 76ms)
+  Turbopack has seen frequent file updates and is waiting for the filesystem to settle (0.5s elapsed so far; last modified: "\\\\?\\D:\\AURIC\\auric-hotel\\node_modules\\gsap\\src").
+  Turbopack has seen frequent file updates and is waiting for the filesystem to settle (0.5s elapsed so far; last modified: "\\\\?\\D:\\AURIC\\auric-hotel\\node_modules\\gsap\\package.json").
+✓ Compiled in 282ms
+ GET /en 200 in 4.2s (next.js: 2.0s, proxy.ts: 254ms, generate-params: 1273ms, application-code: 686ms)
+✓ Compiled in 97ms
+ GET /en 200 in 327ms (next.js: 78ms, proxy.ts: 94ms, generate-params: 9ms, application-code: 147ms)
+✓ Compiled in 84ms
+ GET /en 200 in 201ms (next.js: 55ms, proxy.ts: 43ms, generate-params: 11ms, application-code: 92ms)
+✓ Compiled in 1384ms
+✓ Compiled in 632ms
+✓ Compiled in 379ms
+ GET /en 200 in 468ms (next.js: 173ms, proxy.ts: 77ms, generate-params: 30ms, application-code: 188ms)
+✓ Compiled in 139ms
+ GET /en 200 in 535ms (next.js: 123ms, proxy.ts: 42ms, generate-params: 16ms, application-code: 353ms)
+✓ Compiled in 374ms
+ GET /en 200 in 247ms (next.js: 84ms, proxy.ts: 43ms, generate-params: 17ms, application-code: 102ms)
+✓ Compiled in 62ms
+ GET /en 200 in 270ms (next.js: 44ms, proxy.ts: 42ms, generate-params: 11ms, application-code: 173ms)
+✓ Compiled in 276ms
+ GET /en 200 in 286ms (next.js: 127ms, proxy.ts: 35ms, generate-params: 12ms, application-code: 111ms)
+✓ Compiled in 355ms
+ GET /en 200 in 304ms (next.js: 147ms, proxy.ts: 27ms, generate-params: 12ms, application-code: 118ms)
+✓ Compiled in 233ms
+ GET /en 200 in 433ms (next.js: 206ms, proxy.ts: 57ms, generate-params: 22ms, application-code: 149ms)
+✓ Compiled in 219ms
+ GET /en 200 in 187ms (next.js: 91ms, proxy.ts: 23ms, generate-params: 9ms, application-code: 63ms)
+✓ Compiled in 520ms
+✓ Compiled in 481ms
+ GET /en 200 in 392ms (next.js: 172ms, proxy.ts: 54ms, generate-params: 19ms, application-code: 147ms)
+✓ Compiled in 165ms
+✓ Compiled in 87ms
+✓ Compiled in 295ms
+ GET /en 200 in 451ms (next.js: 251ms, proxy.ts: 61ms, generate-params: 19ms, application-code: 120ms)
+✓ Compiled in 115ms
+ GET /en 200 in 479ms (next.js: 123ms, proxy.ts: 106ms, generate-params: 30ms, application-code: 220ms)
+✓ Compiled in 284ms
+ GET /en 200 in 338ms (next.js: 136ms, proxy.ts: 46ms, generate-params: 15ms, application-code: 141ms)
+ GET /ar 200 in 948ms (next.js: 123ms, proxy.ts: 134ms, generate-params: 43ms, application-code: 648ms)
+ GET /en 200 in 300ms (next.js: 21ms, proxy.ts: 15ms, generate-params: 16ms, application-code: 248ms)

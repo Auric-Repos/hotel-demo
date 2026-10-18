@@ -1,0 +1,33 @@
+{
+  "common": {
+    "brandName": "Auric Hotel",
+    "brandTagline": "A calm Nile-view retreat in Aswan",
+    "loading": "Loading…",
+    "error": "Something went wrong. Please try again."
+  },
+  "nav": {
+    "rooms": "Rooms",
+    "experiences": "Experiences",
+    "contact": "Contact",
+    "bookNow": "Book now",
+    "dashboard": "Dashboard"
+  },
+  "auth": {
+    "signInTitle": "Sign in to Auric",
+    "signInSubtitle": "Access the staff dashboard or manage your reservations.",
+    "backToSite": "Back to the website",
+    "switchLanguage": "العربية"
+  },
+  "whatsapp": {
+    "label": "Chat with us on WhatsApp",
+    "prefill": "Hello, I would like to ask about a stay at {hotel}."
+  },
+  "rooms": {
+    "title": "Sanctuaries Along the Nile",
+    "subtitle": "Thoughtfully appointed rooms and private villas inspired by Nubian heritage.",
+    "perNight": "/ night",
+    "bookRoom": "Reserve",
+    "noRooms": "No rooms available at this time."
+  }
+}
+

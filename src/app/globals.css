@@ -67,9 +67,11 @@
   --shadow-lg: var(--shadow-lg);
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
+  --animate-appear: appear 0.7s ease-out forwards;
 }
 
 :root {
+  color-scheme: light;
   --background: oklch(0.985 0.008 90);
   --foreground: oklch(0.22 0.02 70);
   --card: oklch(0.995 0.005 90);
@@ -128,6 +130,22 @@
 
   --tracking-normal: 0em;
   --spacing: 0.25rem;
+
+  /* Glass system */
+  /* Raised from /0.4 so the floating glass header stays visible over
+     the cream hero background. */
+  --glass-bg: rgb(255 255 255 / 0.6);
+  --glass-bg-strong: rgb(255 255 255 / 0.65);
+  /* Raised from /0.35 so the floating glass header stays visible over
+     the cream hero background. */
+  --glass-border: rgb(255 255 255 / 0.5);
+  --glass-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.6), 0 8px 32px rgb(35 33 31 / 0.12);
+
+  --glass-control-bg: color-mix(in oklab, var(--background) 50%, transparent);
+  --glass-control-border: color-mix(in oklab, var(--background) 30%, transparent);
+  --glass-control-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.6), 0 2px 8px rgb(0 0 0 / 0.08);
 }
 
 /* Arabic locale: swap to Arabic-optimized font stacks */
@@ -178,6 +196,41 @@
   --shadow-lg: 0 10px 15px -3px hsl(0 0% 0% / 0.5), 0 4px 6px -4px hsl(0 0% 0% / 0.4);
   --shadow-xl: 0 20px 25px -5px hsl(0 0% 0% / 0.55), 0 8px 10px -6px hsl(0 0% 0% / 0.4);
   --shadow-2xl: 0 25px 50px -12px hsl(0 0% 0% / 0.65);
+  --glass-bg: rgb(255 255 255 / 0.06);
+  --glass-bg-strong: rgb(255 255 255 / 0.09);
+  --glass-border: rgb(255 255 255 / 0.1);
+  --glass-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.12), 0 8px 32px rgb(0 0 0 / 0.5);
+
+  --glass-control-border: rgb(255 255 255 / 0.2);
+  --glass-control-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.15), 0 2px 8px rgb(0 0 0 / 0.3);
+}
+
+/* Hero entrance animation: fades in from slightly below, ends fully visible
+   (`forwards`) so reduced motion never hides content. */
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Optional scroll indicator: subtle bounce, disabled under motion-reduce. */
+@keyframes hero-scroll {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(6px);
+    opacity: 0.5;
+  }
 }
 
 @layer base {
@@ -190,4 +243,64 @@
   html {
     @apply font-sans;
   }
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  summary,
+  select,
+  a[href],
+  label[for] {
+    cursor: pointer;
+  }
+  button:disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+}
+
+/* Glass utilities (usable with variants like hover:) */
+@utility glass-surface {
+  border: 1px solid var(--glass-border);
+  background-color: var(--glass-bg);
+  backdrop-filter: blur(40px) saturate(1.8);
+  box-shadow: var(--glass-shadow);
+}
+@utility glass-control {
+  border: 1px solid var(--glass-control-border);
+  background-color: var(--glass-control-bg);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--glass-control-shadow);
+}
+
+@utility glass-accent {
+  border: 1px solid color-mix(in oklab, var(--primary) 40%, transparent);
+  background-color: color-mix(in oklab, var(--primary) 25%, transparent);
+}
+
+/* Hero decoration: soft radial gold glow at top center plus a subtle Nubian
+   geometric diamond pattern in the border color, fading out toward the bottom.
+   Token-only, usable with variants such as `motion-reduce:`. */
+@utility bg-hero-decoration {
+  background-image:
+    radial-gradient(
+      circle at 50% 0,
+      color-mix(in oklab, var(--primary) 12%, transparent),
+      transparent 55%
+    ),
+    repeating-linear-gradient(
+      45deg,
+      color-mix(in oklab, var(--border) 35%, transparent) 0,
+      color-mix(in oklab, var(--border) 35%, transparent) 4px,
+      transparent 4px,
+      transparent 9px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      color-mix(in oklab, var(--border) 35%, transparent) 0,
+      color-mix(in oklab, var(--border) 35%, transparent) 4px,
+      transparent 4px,
+      transparent 9px
+    );
+  mask-image: linear-gradient(to bottom, rgb(0 0 0 / 70%) 45%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, rgb(0 0 0 / 70%) 45%, transparent);
+  opacity: 0.45;
 }

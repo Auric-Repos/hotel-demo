@@ -3,14 +3,22 @@
     "brandName": "Auric Hotel",
     "brandTagline": "A calm Nile-view retreat in Aswan",
     "loading": "Loading…",
-    "error": "Something went wrong. Please try again."
+    "error": "Something went wrong. Please try again.",
+    "openMaps": "Open in Google Maps"
   },
   "nav": {
+    "home": "Home",
     "rooms": "Rooms",
     "experiences": "Experiences",
     "contact": "Contact",
     "bookNow": "Book now",
-    "dashboard": "Dashboard"
+    "policies": "Policies",
+    "dashboard": "Dashboard",
+    "menu": "Menu",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "switchLanguage": "العربية",
+    "signIn": "Sign in"
   },
   "auth": {
     "signInTitle": "Sign in to Auric",
@@ -27,7 +35,121 @@
     "subtitle": "Thoughtfully appointed rooms and private villas inspired by Nubian heritage.",
     "perNight": "/ night",
     "bookRoom": "Reserve",
-    "noRooms": "No rooms available at this time."
+    "noRooms": "No rooms available at this time.",
+    "view": {
+      "nile": "Nile view",
+      "garden": "Garden view",
+      "city": "City view"
+    }
+  },
+  "footer": {
+    "quickLinks": "Quick links",
+    "contact": "Contact",
+    "whatsapp": "WhatsApp",
+    "facebook": "Facebook",
+    "instagram": "Instagram",
+    "copyright": "© 2026 {brand}. All rights reserved."
+  },
+  "policies": {
+    "title": "Policies",
+    "intro": "Our full booking, cancellation and house policies are being prepared for this demo. Please contact us if you need any details about your stay."
+  },
+  "highlights": {
+    "nileViews": "Nile Views",
+    "dailyBreakfast": "Daily Breakfast",
+    "airportTransfer": "Airport Transfer",
+    "localExperiences": "Local Experiences"
+  },
+  "gallery": {
+    "images": {
+      "g1": "Nile-view suite at sunset",
+      "g2": "Rooftop terrace overlooking the river",
+      "g3": "Felucca sailing at golden hour",
+      "g4": "Breakfast served in the hotel courtyard"
+    },
+    "stats": {
+      "rooms": "Rooms and suites",
+      "experiences": "Curated experiences",
+      "rating": "Guest rating"
+    }
+  },
+  "home": {
+    "meta": {
+      "title": "{name} — Boutique hotel on the Nile in Aswan",
+      "description": "Nile-view rooms, curated experiences in Aswan, and booking confirmed directly on WhatsApp."
+    },
+    "hero": {
+      "title": "A quiet stay on the Nile",
+      "subtitle": "Boutique rooms, Nubian warmth, and curated experiences in the heart of Aswan."
+    },
+    "availability": {
+      "checkIn": "Check-in",
+      "checkOut": "Check-out",
+      "guests": "Guests",
+      "submit": "Check availability",
+      "errorDates": "Please select your check-in and check-out dates.",
+      "errorPast": "Check-in cannot be in the past.",
+      "errorOrder": "Check-out must be after check-in."
+    },
+    "featuredRooms": {
+      "title": "Featured rooms",
+      "from": "from {price} / night",
+      "capacity": "{n, plural, one {Up to # guest} other {Up to # guests}}"
+    },
+    "experiences": {
+      "title": "Curated experiences",
+      "empty": "Experiences are being updated. Please check back soon.",
+      "duration": {
+        "hours": "{n, plural, one {# hour} other {# hours}}",
+        "minutes": "{n, plural, one {# minute} other {# minutes}}"
+      },
+      "seeAll": "See all experiences"
+    },
+    "steps": {
+      "title": "How it works",
+      "s1": {
+        "step": "Step 1",
+        "title": "Choose your dates",
+        "body": "Tell us when you arrive and how many guests are travelling. No account and no payment needed to start."
+      },
+      "s2": {
+        "step": "Step 2",
+        "title": "Pick your room",
+        "body": "Browse Nile-view and garden rooms, add a sunset felucca or a temple visit, and send your request in a minute."
+      },
+      "s3": {
+        "step": "Step 3",
+        "title": "Confirm on WhatsApp",
+        "body": "Our reception reviews your request and confirms it directly on WhatsApp, with your reference number and arrival details."
+      }
+    },
+    "reviews": {
+      "title": "Guest reviews",
+      "r1": {
+        "text": "We woke up to the Nile every morning. The room was quiet, spotless, and exactly as pictured.",
+        "role": "Honeymoon stay, Germany"
+      },
+      "r2": {
+        "text": "Booking was effortless. We sent a request and had a confirmation on WhatsApp within the hour.",
+        "role": "Weekend getaway, Cairo"
+      },
+      "r3": {
+        "text": "The felucca at sunset was the highlight of our trip, and the hotel arranged everything for us.",
+        "role": "Three nights, France"
+      }
+    },
+    "location": {
+      "title": "Location",
+      "addressLabel": "Address",
+      "airport": "Aswan International Airport — about 15 minutes by car",
+      "train": "Aswan train station — about 10 minutes by car",
+      "corniche": "The Corniche — a short walk along the river",
+      "philae": "Philae Temple — about 20 minutes by boat"
+    },
+    "cta": {
+      "title": "Plan your stay with us",
+      "body": "Share your dates and we will reply with availability and the best rate for your room.",
+      "request": "Request your stay"
+    }
   }
 }
-

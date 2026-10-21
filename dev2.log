@@ -1,0 +1,15 @@
+▲ Next.js 16.4.2 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.1.100:3000
+- Environments: .env.local, .env
+✓ Ready in 1027ms
+✓ Running next.config.ts took 332ms
+- Cache Components enabled
+- Partial Prefetching enabled
+
+Attention: Clerk collects telemetry data from its SDKs when connected to development instances.
+The data collected is used to inform Clerk's product roadmap.
+To learn more, including how to opt-out from the telemetry program, visit: https://clerk.com/docs/telemetry.
+
+ GET /en 200 in 6.0s (next.js: 2.6s, proxy.ts: 301ms, generate-params: 1153ms, application-code: 1976ms)
+ GET /ar 200 in 348ms (next.js: 14ms, proxy.ts: 33ms, generate-params: 8ms, application-code: 293ms)

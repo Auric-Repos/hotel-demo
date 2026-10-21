@@ -18,13 +18,18 @@ export const SITE_CONFIG = {
   tagline: "A quiet stay on the Nile",
   whatsappNumber: "201000000000", // TODO: replace with the hotel's real number
   email: "reservations@example.com", // TODO: replace
+  address: "", // TODO: replace with the hotel's street address
+  mapsUrl: "", // TODO: replace with the hotel's Google Maps share link
+  facebookUrl: "", // TODO: replace with the hotel's Facebook page
+  instagramUrl: "", // TODO: replace with the hotel's Instagram profile
 } as const;
 
-export const HIGHLIGHTS: { label: string; icon: LucideIcon }[] = [
-  { label: "Nile Views", icon: WavesIcon },
-  { label: "Daily Breakfast", icon: CoffeeIcon },
-  { label: "Airport Transfer", icon: CarIcon },
-  { label: "Local Experiences", icon: CompassIcon },
+/** Labels are message keys: resolve them with getTranslations/useTranslations. */
+export const HIGHLIGHTS: { key: string; icon: LucideIcon }[] = [
+  { key: "highlights.nileViews", icon: WavesIcon },
+  { key: "highlights.dailyBreakfast", icon: CoffeeIcon },
+  { key: "highlights.airportTransfer", icon: CarIcon },
+  { key: "highlights.localExperiences", icon: CompassIcon },
 ];
 
 /**
@@ -32,26 +37,20 @@ export const HIGHLIGHTS: { label: string; icon: LucideIcon }[] = [
  * them as fact. Never show invented statistics as real to a client's guests.
  */
 export const GALLERY_STATS = [
-  { value: "6", label: "Rooms and suites" },
-  { value: "6", label: "Curated experiences" },
-  { value: "4.8/5", label: "Guest rating" },
+  { value: "6", key: "gallery.stats.rooms" },
+  { value: "6", key: "gallery.stats.experiences" },
+  { value: "4.8/5", key: "gallery.stats.rating" },
 ] as const;
 
 /** Use photos you own or have written permission to use (the hotel's own, or licensed stock). */
 export const GALLERY_IMAGES = [
-  { src: "/gallery-1.jpg", alt: "Nile-view suite at sunset" },
-  { src: "/gallery-2.jpg", alt: "Rooftop terrace overlooking the river" },
-  { src: "/gallery-3.jpg", alt: "Felucca sailing at golden hour" },
-  { src: "/gallery-4.jpg", alt: "Breakfast served in the hotel courtyard" },
+  { src: "/gallery-1.jpg", key: "gallery.images.g1" },
+  { src: "/gallery-2.jpg", key: "gallery.images.g2" },
+  { src: "/gallery-3.jpg", key: "gallery.images.g3" },
+  { src: "/gallery-4.jpg", key: "gallery.images.g4" },
 ] as const;
 
-/**
- * Local files in /public/videos. Keep each loop short and compressed (a few MB),
- * and add a poster image so the hero never loads blank on slow connections.
- */
-export const HERO_VIDEO_SRC_PC = "/videos/hero-desktop.mp4";
-export const HERO_VIDEO_SRC_MP = "/videos/hero-mobile.mp4";
-
+/* Local files in /public/videos. Keep each loop short and compressed (a few MB). */
 export const SHOWCASE_BG_VIDEO_SRC = "/videos/showcase.mp4";
 
 /**
@@ -59,19 +58,19 @@ export const SHOWCASE_BG_VIDEO_SRC = "/videos/showcase.mp4";
  * Link from src/i18n/navigation so /en and /ar are added automatically.
  */
 export const CENTER_NAV_LINKS = [
-  { label: "Home", href: "/" },
-  { label: "Rooms", href: "/rooms", chevron: true },
-  { label: "Experiences", href: "/experiences" },
-  { label: "Contact", href: "/contact" },
+  { key: "nav.home", href: "/" },
+  { key: "nav.rooms", href: "/rooms", chevron: true },
+  { key: "nav.experiences", href: "/experiences" },
+  { key: "nav.contact", href: "/contact" },
 ] as const;
 
 export const FOOTER_QUICK_LINKS = [
-  { label: "Rooms", href: "/rooms" },
-  { label: "Experiences", href: "/experiences" },
-  { label: "Book Now", href: "/book" },
-  { label: "Contact", href: "/contact" },
-  // /policies is a V1 page: create a simple stub or remove this link for the demo.
-  { label: "Policies", href: "/policies" },
+  { key: "nav.rooms", href: "/rooms" },
+  { key: "nav.experiences", href: "/experiences" },
+  { key: "nav.bookNow", href: "/book" },
+  { key: "nav.contact", href: "/contact" },
+  // /policies is a minimal stub page created in phase 3A.
+  { key: "nav.policies", href: "/policies" },
 ] as const;
 
 /**
@@ -92,10 +91,10 @@ export const WORKFLOW_STYLE_PREVIEW = [
 ] as const;
 
 export type MarketingTestimonial = {
-  text: string;
+  /** Message key namespace: text and role live in messages under `key`. */
+  key: string;
   image: string;
   name: string;
-  role: string;
 };
 
 /**
@@ -106,67 +105,58 @@ export type MarketingTestimonial = {
  */
 export const TESTIMONIALS: MarketingTestimonial[] = [
   {
-    text: "We woke up to the Nile every morning. The room was quiet, spotless, and exactly as pictured.",
+    key: "home.reviews.r1",
     image:
       "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80",
     name: "Hannah Keller",
-    role: "Honeymoon stay, Germany",
   },
   {
-    text: "Booking was effortless. We sent a request and had a confirmation on WhatsApp within the hour.",
+    key: "home.reviews.r2",
     image:
       "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80",
     name: "Omar Fathy",
-    role: "Weekend getaway, Cairo",
   },
   {
-    text: "The felucca at sunset was the highlight of our trip, and the hotel arranged everything for us.",
+    key: "home.reviews.r3",
     image:
       "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&q=80",
     name: "Claire Dubois",
-    role: "Three nights, France",
   },
   {
-    text: "The early transfer to Abu Simbel was handled perfectly. The driver was on time and very professional.",
+    key: "home.reviews.r4",
     image:
       "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&q=80",
     name: "James Whitaker",
-    role: "Abu Simbel day trip, United Kingdom",
   },
   {
-    text: "Warm, attentive staff who never made us feel rushed. It felt like staying with family.",
+    key: "home.reviews.r5",
     image:
       "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=200&q=80",
     name: "Yasmin Adel",
-    role: "Family stay, Alexandria",
   },
   {
-    text: "Breakfast on the terrace with the river in front of us is something we will remember for years.",
+    key: "home.reviews.r6",
     image:
       "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=200&q=80",
     name: "Elena Rossi",
-    role: "Five nights, Italy",
   },
   {
-    text: "Clear information before arrival, a smooth check-in, and a room that matched the photos.",
+    key: "home.reviews.r7",
     image:
       "https://images.unsplash.com/photo-1507591064344-4c6ce005b128?auto=format&fit=crop&w=200&q=80",
     name: "Daniel Novak",
-    role: "Solo traveller, Canada",
   },
   {
-    text: "A calm, beautiful place in the middle of a busy trip. The Nubian village visit was a lovely extra.",
+    key: "home.reviews.r8",
     image:
       "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80",
     name: "Mariam Hassan",
-    role: "Long weekend, Cairo",
   },
   {
-    text: "Great value for the location. Easy to reach the temples, the Corniche, and the train station.",
+    key: "home.reviews.r9",
     image:
       "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=200&q=80",
     name: "Lucas Pereira",
-    role: "Four nights, Brazil",
   },
 ];
 
@@ -177,30 +167,30 @@ export const TESTIMONIAL_COLUMNS = [
 ];
 
 export type HowItWorksStep = {
-  step: string;
-  title: string;
-  body: string;
+  stepKey: string;
+  titleKey: string;
+  bodyKey: string;
   icon: LucideIcon;
   featured?: boolean;
 };
 
 export const HOW_IT_WORKS_STEPS: HowItWorksStep[] = [
   {
-    step: "Step 1",
-    title: "Choose your dates",
-    body: "Tell us when you arrive and how many guests are travelling. No account and no payment needed to start.",
+    stepKey: "home.steps.s1.step",
+    titleKey: "home.steps.s1.title",
+    bodyKey: "home.steps.s1.body",
     icon: CalendarDaysIcon,
   },
   {
-    step: "Step 2",
-    title: "Pick your room",
-    body: "Browse Nile-view and garden rooms, add a sunset felucca or a temple visit, and send your request in a minute.",
+    stepKey: "home.steps.s2.step",
+    titleKey: "home.steps.s2.title",
+    bodyKey: "home.steps.s2.body",
     icon: BedDoubleIcon,
   },
   {
-    step: "Step 3",
-    title: "Confirm on WhatsApp",
-    body: "Our reception reviews your request and confirms it directly on WhatsApp, with your reference number and arrival details.",
+    stepKey: "home.steps.s3.step",
+    titleKey: "home.steps.s3.title",
+    bodyKey: "home.steps.s3.body",
     icon: MessageCircleIcon,
     featured: true,
   },

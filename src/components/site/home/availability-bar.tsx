@@ -1,16 +1,32 @@
 "use client";
 
-import { useState, useSyncExternalStore } from "react";
+import { useState, useSyncExternalStore, type FormEvent } from "react";
 import { useTranslations } from "next-intl";
+import {
+  AlertTriangleIcon,
+  ArrowRightIcon,
+  CalendarDaysIcon,
+  ChevronDownIcon,
+  UsersIcon,
+  type LucideIcon,
+} from "lucide-react";
 
 import { useRouter } from "@/i18n/navigation";
-import { AlertTriangleIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 /** "Today" in the hotel's timezone, as YYYY-MM-DD (en-CA formats ISO-like). */
 function todayInCairo(): string {
   return new Intl.DateTimeFormat("en-CA", { timeZone: "Africa/Cairo" }).format(
     new Date(),
   );
+}
+
+/** The day after an ISO date (UTC math, so no timezone drift). */
+function nextDay(iso: string): string | undefined {
+  const d = new Date(`${iso}T00:00:00Z`);
+  if (Number.isNaN(d.getTime())) return undefined;
+  d.setUTCDate(d.getUTCDate() + 1);
+  return d.toISOString().slice(0, 10);
 }
 
 // The date never needs a subscription: it only changes at midnight, and the
@@ -29,9 +45,58 @@ const ERROR_KEYS = {
 
 type ErrorCode = keyof typeof ERROR_KEYS;
 
-const fieldClass =
-  "mt-1 h-12 w-full rounded-xl border border-border bg-background px-3 text-sm text-foreground " +
-  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold";
+const fieldClass = cn(
+  "h-12 w-full cursor-pointer rounded-xl border border-border/70 bg-background/80 ps-10 pe-3",
+  "text-start text-sm text-foreground",
+  "transition-[border-color,box-shadow,background-color] duration-200",
+  "hover:border-primary/60 hover:bg-background",
+  "focus-visible:border-primary focus-visible:bg-background focus-visible:ring-4 focus-visible:ring-primary/15",
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+  "aria-invalid:border-destructive aria-invalid:ring-4 aria-invalid:ring-destructive/10",
+  "motion-reduce:transition-none",
+);
+
+// Date inputs: the native picker icon is stretched over the whole field and
+// made invisible, so a click anywhere opens the picker. The last class fixes
+// iOS Safari centering the date text.
+const dateClass = cn(
+  fieldClass,
+  "relative invalid:text-muted-foreground",
+  "[&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0",
+  "[&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:w-full",
+  "[&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0",
+  "[&::-webkit-date-and-time-value]:text-start",
+);
+
+function Field({
+  id,
+  label,
+  icon: Icon,
+  children,
+}: {
+  id: string;
+  label: string;
+  icon: LucideIcon;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="min-w-0">
+      <label
+        htmlFor={id}
+        className="mb-1.5 block px-1 text-xs font-medium text-muted-foreground"
+      >
+        {label}
+      </label>
+      <div className="group relative">
+        <Icon
+          aria-hidden
+          className="pointer-events-none absolute start-3 top-1/2 z-10 size-4 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-foreground"
+        />
+        {children}
+      </div>
+    </div>
+  );
+}
 
 /**
  * Date + guests form in the hero. Validates locally (no API call) and navigates
@@ -47,27 +112,42 @@ export function AvailabilityBar() {
     getTodaySnapshot,
     getServerTodaySnapshot,
   );
+
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
+  const [guests, setGuests] = useState("2");
   const [error, setError] = useState<ErrorCode | null>(null);
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  const checkOutMin = checkIn
+    ? nextDay(checkIn)
+    : today
+      ? nextDay(today)
+      : undefined;
+
+  const invalidIn = error === "dates" ? !checkIn : error === "past";
+  const invalidOut = error === "dates" ? !checkOut : error === "order";
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const checkIn = String(data.get("checkIn") ?? "");
-    const checkOut = String(data.get("checkOut") ?? "");
-    const guests = String(data.get("guests") ?? "2");
+    const form = event.currentTarget;
+    const focusField = (name: string) =>
+      (form.elements.namedItem(name) as HTMLElement | null)?.focus();
 
     // Date strings are ISO, so lexicographic comparison is chronological.
     const now = today || todayInCairo();
     if (!checkIn || !checkOut) {
       setError("dates");
+      focusField(!checkIn ? "checkIn" : "checkOut");
       return;
     }
     if (checkIn < now) {
       setError("past");
+      focusField("checkIn");
       return;
     }
     if (checkOut <= checkIn) {
       setError("order");
+      focusField("checkOut");
       return;
     }
 
@@ -83,75 +163,104 @@ export function AvailabilityBar() {
     <form
       onSubmit={handleSubmit}
       noValidate
-      className="w-full max-w-3xl rounded-2xl border border-border bg-card p-3 sm:p-4 shadow-lg text-foreground"
+      className={cn(
+        "relative w-full rounded-2xl border border-border/60 bg-card/75 p-3 text-start text-foreground",
+        "shadow-xl shadow-primary/10 backdrop-blur-xl sm:p-4",
+      )}
     >
-      <div className="grid gap-3 md:grid-cols-4 md:items-end">
-        <div>
-          <label
-            htmlFor="availability-check-in"
-            className="block text-xs font-medium text-muted-foreground"
-          >
-            {t("checkIn")}
-          </label>
+      {/* Gold hairline along the top edge */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-x-8 top-0 h-px bg-linear-to-r from-transparent via-primary/60 to-transparent"
+      />
+
+      <div className="grid items-end gap-3 sm:grid-cols-2 md:grid-cols-[1fr_1fr_8rem_auto]">
+        <Field id="availability-check-in" label={t("checkIn")} icon={CalendarDaysIcon}>
           <input
             id="availability-check-in"
             name="checkIn"
             type="date"
+            value={checkIn}
             min={today || undefined}
             required
-            className={fieldClass}
+            aria-invalid={invalidIn || undefined}
+            aria-describedby={invalidIn ? "availability-error" : undefined}
+            onChange={(e) => {
+              const value = e.target.value;
+              setCheckIn(value);
+              if (checkOut && value && checkOut <= value) setCheckOut("");
+              setError(null);
+            }}
+            className={dateClass}
           />
-        </div>
+        </Field>
 
-        <div>
-          <label
-            htmlFor="availability-check-out"
-            className="block text-xs font-medium text-muted-foreground"
-          >
-            {t("checkOut")}
-          </label>
+        <Field id="availability-check-out" label={t("checkOut")} icon={CalendarDaysIcon}>
           <input
             id="availability-check-out"
             name="checkOut"
             type="date"
-            min={today || undefined}
+            value={checkOut}
+            min={checkOutMin}
             required
-            className={fieldClass}
+            aria-invalid={invalidOut || undefined}
+            aria-describedby={invalidOut ? "availability-error" : undefined}
+            onChange={(e) => {
+              setCheckOut(e.target.value);
+              setError(null);
+            }}
+            className={dateClass}
           />
-        </div>
+        </Field>
 
-        <div>
-          <label
-            htmlFor="availability-guests"
-            className="block text-xs font-medium text-muted-foreground"
-          >
-            {t("guests")}
-          </label>
-          <select
-            id="availability-guests"
-            name="guests"
-            defaultValue="2"
-            className={fieldClass}
-          >
-            {GUEST_OPTIONS.map((n) => (
-              <option key={n} value={n}>
-                {n}
-              </option>
-            ))}
-          </select>
+        <div className="sm:col-span-2 md:col-span-1">
+          <Field id="availability-guests" label={t("guests")} icon={UsersIcon}>
+            <select
+              id="availability-guests"
+              name="guests"
+              value={guests}
+              onChange={(e) => setGuests(e.target.value)}
+              className={cn(fieldClass, "appearance-none pe-9")}
+            >
+              {GUEST_OPTIONS.map((n) => (
+                <option key={n} value={n}>
+                  {n}
+                </option>
+              ))}
+            </select>
+            <ChevronDownIcon
+              aria-hidden
+              className="pointer-events-none absolute end-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
+            />
+          </Field>
         </div>
 
         <button
           type="submit"
-          className="inline-flex w-full h-12 items-center justify-center rounded-xl px-2 font-semibold bg-primary text-primary-foreground shadow-md hover:opacity-80 active:scale-95 duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring motion-reduce:transition-none text-xs"
+          className={cn(
+            "btn-shine group inline-flex h-12 w-full cursor-pointer items-center justify-center gap-2",
+            "rounded-xl bg-primary px-6 text-sm font-semibold whitespace-nowrap text-primary-foreground shadow-md",
+            "transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/30",
+            "active:translate-y-0 active:scale-[0.98]",
+            "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+            "motion-reduce:transition-none motion-reduce:hover:translate-y-0",
+            "sm:col-span-2 md:col-span-1 md:w-auto",
+          )}
         >
-          {t("submit")}
+          <span>{t("submit")}</span>
+          <span className="inline-flex rtl:-scale-x-100" aria-hidden>
+            <ArrowRightIcon className="size-4 transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0" />
+          </span>
         </button>
       </div>
 
       {error && (
-        <p role="alert" className="mt-3 flex items-center gap-2 text-sm text-destructive">
-          <AlertTriangleIcon aria-hidden className="size-4 shrink-0 me-2" />
+        <p
+          id="availability-error"
+          role="alert"
+          className="mt-3 flex items-start gap-2 rounded-lg bg-destructive/10 px-3 py-2 text-sm text-destructive"
+        >
+          <AlertTriangleIcon aria-hidden className="mt-0.5 size-4 shrink-0" />
           {t(ERROR_KEYS[error])}
         </p>
       )}

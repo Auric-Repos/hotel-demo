@@ -50,6 +50,13 @@ export const GALLERY_IMAGES = [
   { src: "/gallery-4.jpg", key: "gallery.images.g4" },
 ] as const;
 
+export const EXPERIENCE_IMAGES = [
+  { src: "/experience/felucca.jpg", key: "exp.images.e2" },
+  { src: "/experience/Nuba.jpg", key: "exp.images.e3" },
+  { src: "/experience/Abu Simbel.png", key: "exp.images.e1" },
+  { src: "/experience/temple of philae.png", key: "exp.images.e4" },
+] as const;
+
 /* Local files in /public/videos. Keep each loop short and compressed (a few MB). */
 export const SHOWCASE_BG_VIDEO_SRC = "/videos/showcase.mp4";
 

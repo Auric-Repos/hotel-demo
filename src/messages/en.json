@@ -94,16 +94,22 @@
     "featuredRooms": {
       "title": "Featured rooms",
       "from": "from {price} / night",
-      "capacity": "{n, plural, one {Up to # guest} other {Up to # guests}}"
+      "capacity": "{n, plural, one {Up to # guest} other {Up to # guests}}",
+      "seeAll": "See all rooms"
     },
     "experiences": {
       "title": "Curated experiences",
+      "subtitle": "From sailing the timeless Nile to discovering the wonders of Aswan, create unforgettable memories through experiences crafted just for you.",
       "empty": "Experiences are being updated. Please check back soon.",
       "duration": {
         "hours": "{n, plural, one {# hour} other {# hours}}",
         "minutes": "{n, plural, one {# minute} other {# minutes}}"
       },
       "seeAll": "See all experiences"
+    },
+    "gallery": {
+      "title": "A Glimpse of Our World",
+      "subtitle": "Discover the moments, spaces, and Nile-side experiences that make every stay unforgettable."
     },
     "steps": {
       "title": "How it works",
@@ -125,6 +131,7 @@
     },
     "reviews": {
       "title": "Guest reviews",
+      "subtitle": "Words from guests who stayed with us.",
       "r1": {
         "text": "We woke up to the Nile every morning. The room was quiet, spotless, and exactly as pictured.",
         "role": "Honeymoon stay, Germany"

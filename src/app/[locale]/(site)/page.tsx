@@ -74,7 +74,7 @@ export default async function HomePage({ params }: Props) {
   return (
     <>
       <Hero locale={locale} />
-      <Highlights locale={locale} />
+      {/* <Highlights locale={locale} /> */}
       <Suspense fallback={<RoomsSkeleton />}>
         <FeaturedRooms locale={locale} />
       </Suspense>

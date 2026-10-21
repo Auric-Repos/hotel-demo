@@ -71,4 +71,6 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
+Every new home-page section uses the `section-bento` class from globals.css on its <section> (with bg-background and a top border-border/40), with content inside a max-w-7xl container. Do not add other decorative backgrounds.
+
 <!-- END:nextjs-agent-rules -->

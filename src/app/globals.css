@@ -45,6 +45,11 @@
   --color-gold-soft: var(--gold-soft);
   --color-sand: var(--sand);
 
+  /* Hero aurora (liquid background) */
+  --color-aurora-gold: var(--aurora-gold);
+  --color-aurora-teal: var(--aurora-teal);
+  --color-aurora-sand: var(--aurora-sand);
+
   /* Fonts (locale-switched via .locale-ar on <html>) */
   --font-sans: var(--font-body);
   --font-serif: var(--font-heading);
@@ -68,6 +73,12 @@
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
   --animate-appear: appear 0.7s ease-out forwards;
+  --animate-aurora-a: aurora-a 9s ease-in-out infinite alternate;
+  --animate-aurora-b: aurora-b 12s ease-in-out infinite alternate;
+  --animate-aurora-c: aurora-c 15s ease-in-out infinite alternate;
+  --animate-aurora-d: aurora-d 18s ease-in-out infinite alternate;
+  --animate-marquee-y: marquee-y var(--marquee-duration, 40s) linear infinite;
+  @keyframes marquee-y { from { transform: translateY(0); } to { transform: translateY(-50%); } }
 }
 
 :root {
@@ -116,6 +127,11 @@
   --gold: #b8975a;
   --gold-soft: #f1e8d6;
   --sand: #fbf8f2;
+
+  /* Hero aurora (liquid background): soft, desaturated Nile palette. */
+  --aurora-gold: color-mix(in oklab, var(--primary) 85%, white);
+  --aurora-teal: oklch(0.78 0.08 195);
+  --aurora-sand: oklch(0.9 0.06 65);
 
   --radius: 0.5rem;
 
@@ -233,6 +249,74 @@
   }
 }
 
+/* Liquid aurora: four soft blurred blobs drifting behind the hero content.
+   transform/opacity only so the compositor can handle them on the GPU.
+   `infinite alternate` makes each path drift out and back; different
+   durations and negative delays keep the blobs out of sync so they
+   periodically overlap and pull apart. */
+@keyframes aurora-a {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  }
+  33% {
+    transform: translate3d(20vw, 16vh, 0) scale(1.06) rotate(4deg);
+  }
+  66% {
+    transform: translate3d(-24vw, -20vh, 0) scale(1.1) rotate(-6deg);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  }
+}
+@keyframes aurora-b {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  }
+  33% {
+    transform: translate3d(-22vw, -18vh, 0) scale(1.08) rotate(-6deg);
+  }
+  66% {
+    transform: translate3d(24vw, 14vh, 0) scale(1.05) rotate(5deg);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  }
+}
+@keyframes aurora-c {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  }
+  33% {
+    transform: translate3d(18vw, -22vh, 0) scale(0.98) rotate(6deg);
+  }
+  66% {
+    transform: translate3d(-20vw, 24vh, 0) scale(1.07) rotate(-4deg);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  }
+}
+@keyframes aurora-d {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  }
+  33% {
+    transform: translate3d(-16vw, 20vh, 0) scale(1.05) rotate(-4deg);
+  }
+  66% {
+    transform: translate3d(20vw, -18vh, 0) scale(1.04) rotate(5deg);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  }
+}
+
+/* Pause every aurora blob when the hero is off-screen or the tab is hidden
+   (toggled via data-aurora-paused on the wrapper). */
+[data-aurora-paused="true"] .aurora-blob {
+  animation-play-state: paused;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -276,31 +360,146 @@
   background-color: color-mix(in oklab, var(--primary) 25%, transparent);
 }
 
-/* Hero decoration: soft radial gold glow at top center plus a subtle Nubian
-   geometric diamond pattern in the border color, fading out toward the bottom.
-   Token-only, usable with variants such as `motion-reduce:`. */
-@utility bg-hero-decoration {
-  background-image:
-    radial-gradient(
-      circle at 50% 0,
-      color-mix(in oklab, var(--primary) 12%, transparent),
-      transparent 55%
-    ),
-    repeating-linear-gradient(
-      45deg,
-      color-mix(in oklab, var(--border) 35%, transparent) 0,
-      color-mix(in oklab, var(--border) 35%, transparent) 4px,
-      transparent 4px,
-      transparent 9px
-    ),
-    repeating-linear-gradient(
-      -45deg,
-      color-mix(in oklab, var(--border) 35%, transparent) 0,
-      color-mix(in oklab, var(--border) 35%, transparent) 4px,
-      transparent 4px,
-      transparent 9px
+/* Fine film grain on top of the aurora blobs to prevent gradient banding.
+   Inline SVG feTurbulence noise as a data URI; multiply blend keeps it
+   subtle on the cream background. */
+@utility bg-grain {
+  opacity: 0.06;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg%20viewBox='0%200%20200%20200'%20xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter%20id='grain'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.6'%20numOctaves='3'%20stitchTiles='stitch'/%3E%3C/filter%3E%3Crect%20width='100%25'%20height='100%25'%20filter='url(%23grain)'/%3E%3C/svg%3E");
+}
+@theme {
+  --animate-appear: appear 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-hero-scroll: hero-scroll 2s ease-in-out infinite;
+
+  @keyframes appear {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+      filter: blur(6px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+      filter: none;
+    }
+  }
+
+  @keyframes hero-scroll {
+    0%   { opacity: 0; transform: translateY(-4px); }
+    40%  { opacity: 1; }
+    100% { opacity: 0; transform: translateY(8px); }
+  }
+  --animate-marquee-y: marquee-y var(--marquee-duration, 40s) linear infinite;
+
+  @keyframes marquee-y {
+    from { transform: translateY(0); }
+    to   { transform: translateY(-50%); }
+  }
+}
+
+/* Light sheen that sweeps across a button on hover/focus. */
+@layer components {
+  .btn-shine {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    --shine-dir: 1;
+  }
+  [dir="rtl"] .btn-shine {
+    --shine-dir: -1;
+  }
+  .btn-shine::after {
+    content: "";
+    position: absolute;
+    z-index: -1; /* above the button background, below its text */
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: 45%;
+    pointer-events: none;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgb(255 255 255 / 0.45),
+      transparent
     );
-  mask-image: linear-gradient(to bottom, rgb(0 0 0 / 70%) 45%, transparent);
-  -webkit-mask-image: linear-gradient(to bottom, rgb(0 0 0 / 70%) 45%, transparent);
-  opacity: 0.45;
+    transform: skewX(calc(var(--shine-dir) * -20deg));
+    translate: calc(var(--shine-dir) * -130%) 0;
+    transition: translate 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .btn-shine:hover::after,
+  .btn-shine:focus-visible::after {
+    translate: calc(var(--shine-dir) * 330%) 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-shine::after {
+    display: none;
+  }
+}
+
+@layer components {
+  .section-bento {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+
+    /* 3x3 bento tile: rounded outlines, plus 3 faintly filled cells.
+       Only the alpha matters here (it is used as a mask), so the color
+       comes from the element, not the SVG. */
+    --bento-tile: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='288' height='288'%3E%3Cg fill='none' stroke='black' stroke-width='1'%3E%3Crect x='4.5' y='4.5' width='87' height='87' rx='16'/%3E%3Crect x='100.5' y='4.5' width='87' height='87' rx='16'/%3E%3Crect x='196.5' y='4.5' width='87' height='87' rx='16'/%3E%3Crect x='4.5' y='100.5' width='87' height='87' rx='16'/%3E%3Crect x='100.5' y='100.5' width='87' height='87' rx='16'/%3E%3Crect x='196.5' y='100.5' width='87' height='87' rx='16'/%3E%3Crect x='4.5' y='196.5' width='87' height='87' rx='16'/%3E%3Crect x='100.5' y='196.5' width='87' height='87' rx='16'/%3E%3Crect x='196.5' y='196.5' width='87' height='87' rx='16'/%3E%3C/g%3E%3Cg fill='black' fill-opacity='.16'%3E%3Crect x='100.5' y='4.5' width='87' height='87' rx='16'/%3E%3Crect x='196.5' y='100.5' width='87' height='87' rx='16'/%3E%3Crect x='4.5' y='196.5' width='87' height='87' rx='16'/%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .section-bento::before,
+  .section-bento::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  /* Centered golden glow (sits below the grid) */
+  .section-bento::before {
+    background:
+      radial-gradient(
+        ellipse 32% 28% at 50% 50%,
+        color-mix(in oklab, var(--primary) 20%, transparent) 0%,
+        transparent 100%
+      ),
+      radial-gradient(
+        ellipse 70% 55% at 50% 50%,
+        color-mix(in oklab, var(--primary) 14%, transparent) 0%,
+        color-mix(in oklab, var(--primary) 5%, transparent) 50%,
+        transparent 80%
+      );
+  }
+
+  /* Bento grid, faded out toward the edges */
+  .section-bento::after {
+    background-color: color-mix(in oklab, var(--primary) 50%, var(--border));
+    opacity: 0.7;
+    -webkit-mask-image:
+      var(--bento-tile),
+      radial-gradient(ellipse 80% 75% at 50% 50%, #000 0%, transparent 88%);
+    mask-image:
+      var(--bento-tile),
+      radial-gradient(ellipse 80% 75% at 50% 50%, #000 0%, transparent 88%);
+    -webkit-mask-composite: source-in;
+    mask-composite: intersect;
+    -webkit-mask-repeat: repeat, no-repeat;
+    mask-repeat: repeat, no-repeat;
+    -webkit-mask-size: 288px 288px, 100% 100%;
+    mask-size: 288px 288px, 100% 100%;
+    -webkit-mask-position: 50% 0, 0 0;
+    mask-position: 50% 0, 0 0;
+  }
+
+  @media (max-width: 640px) {
+    .section-bento::after {
+      -webkit-mask-size: 216px 216px, 100% 100%;
+      mask-size: 216px 216px, 100% 100%;
+    }
+  }
 }

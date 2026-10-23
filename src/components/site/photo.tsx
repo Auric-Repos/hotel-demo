@@ -5,13 +5,48 @@ import Image, { type ImageProps } from "next/image";
 
 import { cn } from "@/lib/utils";
 
+type PhotoProps = Omit<
+  ImageProps,
+  "onError" | "width" | "height" | "fill"
+> &
+  (
+    | {
+        fill: true;
+        width?: never;
+        height?: never;
+      }
+    | {
+        fill?: false;
+        width: number;
+        height: number;
+      }
+  );
+
 /**
- * next/image wrapper for every photo on the public site.
- * Photos do not exist yet: if the file fails to load, render a sand-colored
- * block (#f1e8d6) with the alt text in muted charcoal instead of a broken image.
+ * Reusable image wrapper for public-facing photos.
+ *
+ * - Supports explicit dimensions or fill layouts.
+ * - Displays an accessible fallback when an image fails to load.
+ * - Resets the fallback automatically when the image source changes.
+ * - Preserves custom styling and image loading options.
  */
-export function Photo({ className, alt, ...props }: ImageProps) {
-  const [failed, setFailed] = useState(false);
+export function Photo(props: PhotoProps) {
+  const [failedSrc, setFailedSrc] = useState<
+    ImageProps["src"] | null
+  >(null);
+
+  const {
+    className,
+    alt,
+    src,
+    fill,
+    width,
+    height,
+    style,
+    ...imageProps
+  } = props;
+
+  const failed = failedSrc === src;
 
   if (failed) {
     return (
@@ -19,21 +54,35 @@ export function Photo({ className, alt, ...props }: ImageProps) {
         role="img"
         aria-label={alt}
         className={cn(
-          "flex items-center justify-center bg-gold-soft p-4 text-center text-sm text-charcoal/70",
+          "flex items-center justify-center overflow-hidden",
+          "bg-gold-soft p-4 text-center text-sm text-charcoal/70",
+          fill && "absolute inset-0",
           className,
         )}
+        style={
+          fill
+            ? style
+            : {
+                ...style,
+                width,
+                height,
+              }
+        }
       >
-        {alt}
+        {alt || "Image unavailable"}
       </div>
     );
   }
 
   return (
     <Image
+      {...imageProps}
+      src={src}
       alt={alt}
       className={className}
-      onError={() => setFailed(true)}
-      {...props}
+      style={style}
+      {...(fill ? { fill: true as const } : { width, height })}
+      onError={() => setFailedSrc(src)}
     />
   );
 }

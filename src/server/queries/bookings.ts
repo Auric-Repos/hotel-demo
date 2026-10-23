@@ -1,7 +1,7 @@
 import "server-only";
-import { and, eq, sql, desc, or, ilike, notInArray } from "drizzle-orm";
+import { and, eq, sql, desc, or, ilike, notInArray, inArray } from "drizzle-orm";
 import { db } from "@/server/db";
-import { bookings, type BookingStatus } from "@/server/db/schema";
+import { bookings, type BookingStatus, rooms } from "@/server/db/schema";
 
 export async function listBookings(
   tenantId: string,
@@ -138,4 +138,119 @@ export async function getDashboardSummary(tenantId: string) {
     occupancyPercent,
     newInquiriesCount,
   };
+}
+
+// Matches generateReference(): "AUR-" + 6 chars from the unambiguous alphabet.
+const REFERENCE_PATTERN = /^AUR-[2-9A-HJ-NP-Z]{6}$/;
+
+export type BookingConfirmation = {
+  reference: string;
+  roomNameEn: string;
+  roomNameAr: string;
+  checkIn: string;
+  checkOut: string;
+  nights: number;
+  guests: number;
+  firstName: string;
+};
+
+/**
+ * Returns only what the confirmation page needs. Never exposes phone, email,
+ * notes, price or status. Always scoped to the tenant.
+ */
+export async function getBookingByReference(
+  tenantId: string,
+  reference: string,
+): Promise<BookingConfirmation | null> {
+  const ref = reference.trim().toUpperCase();
+  if (!REFERENCE_PATTERN.test(ref)) return null;
+
+  const [row] = await db
+    .select({
+      reference: bookings.reference,
+      checkIn: bookings.checkIn,
+      checkOut: bookings.checkOut,
+      adults: bookings.adults,
+      children: bookings.children,
+      guestName: bookings.guestName,
+      roomNameEn: rooms.nameEn,
+      roomNameAr: rooms.nameAr,
+    })
+    .from(bookings)
+    .innerJoin(rooms, eq(bookings.roomId, rooms.id))
+    .where(and(eq(bookings.tenantId, tenantId), eq(bookings.reference, ref)))
+    .limit(1);
+
+  if (!row) return null;
+
+  const nights = Math.round(
+    (new Date(`${row.checkOut}T00:00:00Z`).getTime() -
+      new Date(`${row.checkIn}T00:00:00Z`).getTime()) /
+      86_400_000,
+  );
+
+  return {
+    reference: row.reference,
+    roomNameEn: row.roomNameEn,
+    roomNameAr: row.roomNameAr,
+    checkIn: row.checkIn,
+    checkOut: row.checkOut,
+    nights,
+    guests: row.adults + row.children,
+    firstName: row.guestName.trim().split(/\s+/)[0] ?? "",
+  };
+}
+
+export type DashboardBooking = {
+  id: string;
+  reference: string;
+  status: BookingStatus;
+  checkIn: string;
+  checkOut: string;
+  adults: number;
+  children: number;
+  guestName: string;
+  guestPhone: string;
+  guestEmail: string | null;
+  guestCountry: string | null;
+  notes: string | null;
+  totalPriceCents: number;
+  createdAt: Date;
+  roomNameEn: string;
+  roomNameAr: string;
+};
+
+/** Bookings with room names for the owner dashboard, newest first. */
+export async function listBookingsForDashboard(
+  tenantId: string,
+  statuses?: BookingStatus[],
+  limit = 100,
+): Promise<DashboardBooking[]> {
+  const conditions = [eq(bookings.tenantId, tenantId)];
+  if (statuses?.length) conditions.push(inArray(bookings.status, statuses));
+
+  return db
+    .select({
+      id: bookings.id,
+      reference: bookings.reference,
+      status: bookings.status,
+      checkIn: bookings.checkIn,
+      checkOut: bookings.checkOut,
+      adults: bookings.adults,
+      children: bookings.children,
+      guestName: bookings.guestName,
+      guestPhone: bookings.guestPhone,
+      guestEmail: bookings.guestEmail,
+      guestCountry: bookings.guestCountry,
+      notes: bookings.notes,
+      totalPriceCents: bookings.totalPriceCents,
+      createdAt: bookings.createdAt,
+      roomNameEn: rooms.nameEn,
+      roomNameAr: rooms.nameAr,
+    })
+    .from(bookings)
+    .innerJoin(rooms, eq(bookings.roomId, rooms.id))
+    .where(and(...conditions))
+    .orderBy(desc(bookings.createdAt))
+    .limit(limit);
 }

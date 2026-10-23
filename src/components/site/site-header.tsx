@@ -4,9 +4,6 @@ import { useLayoutEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { ChevronDownIcon, MenuIcon, XIcon } from "lucide-react";
 
-import { Show, SignInButton, UserButton } from "@clerk/nextjs";
-import { Button } from "@/components/ui/button";
-
 import { Link, usePathname } from "@/i18n/navigation";
 import { CENTER_NAV_LINKS, SITE_CONFIG } from "@/lib/constants";
 import { cn } from "@/lib/utils";
@@ -184,24 +181,6 @@ export function SiteHeader() {
             )}
           />
 
-          <Show when="signed-out">
-            <SignInButton mode="modal" fallbackRedirectUrl="/account">
-              <Button
-                className={cn(
-                  "glass-control text-foreground h-10 rounded-xl px-3 text-sm font-medium md:h-9 md:px-4",
-                  "transition-all duration-300 hover:bg-accent active:scale-95",
-                  focusRing,
-                  motionSafe,
-                )}
-              >
-                {t("nav.signIn")}
-              </Button>
-            </SignInButton>
-          </Show>
-          <Show when="signed-in">
-            <UserButton />
-          </Show>
-
           <Link
             href="/book"
             className={cn(
@@ -295,25 +274,6 @@ export function SiteHeader() {
                   )}
                 />
 
-                <Show when="signed-out">
-                  <SignInButton mode="modal" fallbackRedirectUrl="/account">
-                    <Button
-                      onClick={handleNavClick}
-                      className={cn(
-                        "glass-control text-foreground h-10 rounded-xl text-sm font-medium",
-                        "transition-all duration-300 active:scale-95",
-                        focusRing,
-                        motionSafe,
-                      )}
-                    >
-                      {t("nav.signIn")}
-                    </Button>
-                  </SignInButton>
-                </Show>
-
-                <Show when="signed-in">
-                  <UserButton />
-                </Show>
 
                 <Link
                   href="/book"

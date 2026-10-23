@@ -1,6 +1,7 @@
 import { SignIn } from "@clerk/nextjs";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { SITE_CONFIG } from "@/lib/constants";
 import { routing } from "@/i18n/routing";
 
 export function generateStaticParams() {
@@ -25,7 +26,7 @@ export default async function SignInPage({ params }: Props) {
     <main className="flex min-h-full flex-col items-center justify-center bg-sand px-4 py-12">
       <div className="w-full max-w-md">
         <header className="mb-8 text-center">
-          <p className="font-heading text-3xl text-ink">{t("signInTitle")}</p>
+          <p className="font-heading text-3xl text-ink">{t("signInTitle", { hotel: SITE_CONFIG.name })}</p>
           <p className="mt-2 text-sm text-muted-foreground">
             {t("signInSubtitle")}
           </p>

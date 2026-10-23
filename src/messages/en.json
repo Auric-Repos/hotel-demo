@@ -1,6 +1,5 @@
 {
   "common": {
-    "brandName": "Auric Hotel",
     "brandTagline": "A calm Nile-view retreat in Aswan",
     "loading": "Loading…",
     "error": "Something went wrong. Please try again.",
@@ -21,7 +20,7 @@
     "signIn": "Sign in"
   },
   "auth": {
-    "signInTitle": "Sign in to Auric",
+    "signInTitle": "Sign in to {hotel}",
     "signInSubtitle": "Access the staff dashboard or manage your reservations.",
     "backToSite": "Back to the website",
     "switchLanguage": "العربية"
@@ -40,7 +39,50 @@
       "nile": "Nile view",
       "garden": "Garden view",
       "city": "City view"
+    },
+    "similarRooms": "Similar rooms",
+    "capacity": "{n, plural, one {Up to # guest} other {Up to # guests}}",
+    "bed": "Bed type",
+    "size": "{sqm} m²",
+    "amenities": "Amenities",
+    "from": "from {price} / night",
+    "pricePerNight": "Price per night",
+    "requestThisRoom": "Request this room",
+    "noMatch": "No rooms match your filters.",
+    "filters": {
+      "view": "View",
+      "guests": "Guests",
+      "any": "Any",
+      "allViews": "All views",
+      "min": "{n, plural, one {# guest or more} other {# guests or more}}"
+    },
+    "backToRooms": "All rooms",
+    "requestNote": "Send a request and the hotel will confirm with you directly.",
+    "meta": {
+      "title": "{name} — Rooms",
+      "description": "Browse our Nile-view and garden rooms and send a booking request directly on WhatsApp."
     }
+  },
+  "amenities": {
+    "nile-view-terrace": "Nile view terrace",
+    "freestanding-bath": "Freestanding bath",
+    "butler-service": "Butler service",
+    "breakfast-included": "Breakfast included",
+    "panoramic-balcony": "Panoramic balcony",
+    "walk-in-shower": "Walk-in shower",
+    "espresso-bar": "Espresso bar",
+    "espresso-machine": "Espresso machine",
+    "riverfront-balcony": "Riverfront balcony",
+    "nubian-cotton-linens": "Nubian cotton linens",
+    "private-patio": "Private patio",
+    "courtyard-view": "Courtyard view",
+    "handcrafted-furnishings": "Handcrafted furnishings",
+    "garden-loggia": "Garden loggia",
+    "artisan-tea-bar": "Artisan tea bar",
+    "marble-bathroom": "Marble bathroom",
+    "courtyard-outlook": "Courtyard outlook",
+    "work-desk": "Work desk",
+    "walk-in-rain-shower": "Walk-in rain shower"
   },
   "footer": {
     "quickLinks": "Quick links",
@@ -48,7 +90,8 @@
     "whatsapp": "WhatsApp",
     "facebook": "Facebook",
     "instagram": "Instagram",
-    "copyright": "© 2026 {brand}. All rights reserved."
+    "copyright": "© 2026 {brand}. All rights reserved.",
+    "staff": "Staff dashboard"
   },
   "policies": {
     "title": "Policies",
@@ -157,6 +200,192 @@
       "title": "Plan your stay with us",
       "body": "Share your dates and we will reply with availability and the best rate for your room.",
       "request": "Request your stay"
+    }
+  },
+  "book": {
+    "title": "Reserve your stay",
+    "subtitle": "Choose your dates and we will show you the rooms available for your party.",
+    "stay": {
+      "title": "Your stay",
+      "checkIn": "Check-in",
+      "checkOut": "Check-out",
+      "adults": "Adults",
+      "children": "Children",
+      "search": "Check availability",
+      "searching": "Checking availability…",
+      "stale": "Your dates or party size changed. Check availability again to see the available rooms."
+    },
+    "room": {
+      "title": "Choose a room",
+      "none": "No rooms are available for these dates. Please try different dates or a smaller party.",
+      "capacity": "{n, plural, one {Up to # guest} other {Up to # guests}}",
+      "askHotel": "Ask the hotel on WhatsApp",
+      "askMessage": "Hello, I'd like to ask about a room from {checkIn} to {checkOut} for {guests} guests."
+    },
+    "guest": {
+      "title": "Guest details",
+      "name": "Full name",
+      "phone": "Phone number",
+      "email": "Email (optional)",
+      "country": "Country (optional)",
+      "notes": "Notes (optional)",
+      "submit": "Request booking",
+      "submitting": "Sending request…"
+    },
+    "summary": {
+      "title": "Stay summary",
+      "guests": "Guests",
+      "nights": "Nights",
+      "room": "Room",
+      "total": "Estimated total",
+      "disclaimer": "The total is an estimate based on the nightly rate. Final pricing is confirmed by the hotel."
+    },
+    "success": {
+      "title": "Booking request received",
+      "body": "Thank you. Our reservations team will confirm your stay shortly.",
+      "whatsapp": "Continue on WhatsApp",
+      "whatsappMessage": "Hello, I would like to confirm my booking request ({reference})."
+    },
+    "steps": {
+      "stay": "Stay",
+      "room": "Room",
+      "guest": "Your details",
+      "review": "Review",
+      "progress": "Step {current} of {total}"
+    },
+    "nav": { "back": "Back", "next": "Next" },
+    "review": {
+      "title": "Review your request",
+      "request": "This is a booking request, not a confirmed reservation. The hotel will confirm with you on WhatsApp. No payment is taken online.",
+      "estimatedTotal": "Estimated total",
+      "changeDates": "Change dates"
+    },
+    "confirmation": {
+      "title": "Request received",
+      "greeting": "Thank you, {name}. Your booking request has been sent to the hotel.",
+      "reference": "Your reference",
+      "next": {
+        "title": "What happens next",
+        "step1": "The hotel checks that the room is free for your dates.",
+        "step2": "They message you on WhatsApp to confirm your booking.",
+        "step3": "Keep your reference handy if you need to contact the hotel."
+      },
+      "notFound": {
+        "title": "We couldn't find that request",
+        "body": "Check the reference in your link, or send a new request. If you already sent one, the hotel will still contact you on WhatsApp.",
+        "cta": "Send a new request"
+      }
+    },
+    "errors": {
+      "invalidDate": "Please enter a valid date.",
+      "adultsRequired": "At least one adult is required.",
+      "adultsInvalid": "The number of adults is not valid.",
+      "childrenInvalid": "The number of children is not valid.",
+      "roomRequired": "Please choose a room.",
+      "nameRequired": "Please enter your full name.",
+      "nameTooLong": "The name is too long.",
+      "phoneRequired": "Please enter a phone number.",
+      "phoneInvalid": "Please enter a valid phone number.",
+      "emailInvalid": "Please enter a valid email address.",
+      "countryTooLong": "The country name is too long.",
+      "notesTooLong": "The notes are too long.",
+      "checkOutOrder": "Check-out must be after check-in.",
+      "invalidDates": "Please choose valid check-in and check-out dates.",
+      "pastDate": "Check-in cannot be in the past.",
+      "roomNotFound": "This room is no longer available. Please choose another one.",
+      "overCapacity": "The selected room cannot host your whole party.",
+      "datesUnavailable": "This room was just booked for the selected dates. Please choose another one.",
+      "referenceFailed": "We could not create the booking reference. Please try again.",
+      "validationFailed": "Some details are missing or incorrect. Please review the form.",
+      "unknown": "Something went wrong. Please try again.",
+      "checkFields": "Please check the highlighted fields."
+    }
+  },
+  "dashboard": {
+    "nav": { "overview": "Overview", "bookings": "Bookings" },
+    "status": {
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "checked_in": "Checked in",
+      "checked_out": "Checked out",
+      "cancelled": "Cancelled",
+      "declined": "Declined",
+      "no_show": "No-show"
+    },
+    "bookings": {
+      "title": "Booking requests",
+      "tabs": { "pending": "Pending", "confirmed": "Confirmed", "all": "All" },
+      "empty": {
+        "pending": "No pending requests. New ones will appear here.",
+        "confirmed": "No confirmed bookings yet.",
+        "all": "No bookings yet."
+      },
+      "received": "Received {time}",
+      "room": "Room",
+      "dates": "Dates",
+      "nights": "Nights",
+      "guests": "Guests",
+      "total": "Total",
+      "notes": "Guest notes",
+      "whatsapp": "Message on WhatsApp",
+      "whatsappGreeting": "Hello {name}, this is {hotel}. We received your booking request {reference}."
+    },
+    "actions": {
+      "confirm": "Confirm booking",
+      "decline": "Decline request",
+      "cancel": "Cancel booking",
+      "ask": {
+        "decline": "Decline this request?",
+        "cancel": "Cancel this booking?"
+      },
+      "yes": "Yes",
+      "no": "Go back",
+      "done": {
+        "confirm": "Booking confirmed.",
+        "decline": "Request declined.",
+        "cancel": "Booking cancelled."
+      },
+      "errors": {
+        "noAccess": "You don't have permission to do this.",
+        "notFound": "Booking not found.",
+        "invalidTransition": "This booking can't be changed right now. Refresh the page.",
+        "datesUnavailable": "These dates are already taken by another confirmed booking for the same room.",
+        "unknown": "Something went wrong. Please try again."
+      }
+    },
+    "noAccess": {
+      "title": "No access yet",
+      "body": "Your account isn't linked to a hotel. Send this ID to the Auric team to get access.",
+      "userId": "Account ID"
+    },
+    "overview": {
+      "title": "Overview",
+      "viewAll": "View all",
+      "banner": {
+        "title": "{count, plural, one {# booking request is waiting for your reply} other {# booking requests are waiting for your reply}}",
+        "body": "The sooner you reply on WhatsApp, the more likely the guest confirms.",
+        "cta": "Review requests",
+        "clear": "No requests are waiting. You're all caught up."
+      },
+      "stats": {
+        "pending": "Awaiting reply",
+        "arrivalsToday": "Arriving today",
+        "inHouse": "Guests in house",
+        "revenue": "This month",
+        "revenueHint": "Confirmed stays arriving this month"
+      },
+      "waiting": { "title": "Waiting for you", "empty": "Nothing is waiting for a reply." },
+      "arrivals": {
+        "title": "Next 7 days",
+        "today": "Today",
+        "guests": "{count, plural, one {# guest} other {# guests}}",
+        "empty": "No confirmed arrivals in the coming days."
+      },
+      "greeting": {
+        "morning": "Good morning",
+        "afternoon": "Good afternoon",
+        "evening": "Good evening"
+      }
     }
   }
 }

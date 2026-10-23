@@ -78,6 +78,7 @@ export const FOOTER_QUICK_LINKS = [
   { key: "nav.contact", href: "/contact" },
   // /policies is a minimal stub page created in phase 3A.
   { key: "nav.policies", href: "/policies" },
+  { key: "footer.staff",   href:"/dashboard" }
 ] as const;
 
 /**

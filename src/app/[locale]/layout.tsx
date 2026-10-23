@@ -8,10 +8,12 @@ import {
 import { ClerkProvider } from "@clerk/nextjs";
 import { arSA } from "@clerk/localizations";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages, setRequestLocale } from "next-intl/server";
+import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing, type Locale } from "@/i18n/routing";
+import { SITE_CONFIG } from "@/lib/constants";
 import "../globals.css";
+import { AppToaster } from "@/components/site/app-toaster";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -48,10 +50,23 @@ type Props = {
   params: Promise<{ locale: string }>;
 };
 
-export const metadata: Metadata = {
-  title: "Auric Hotel",
-  description: "A calm Nile-view retreat in Aswan, Egypt.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations({ locale, namespace: "common" });
+
+  return {
+    title: SITE_CONFIG.name,
+    description: t("brandTagline"),
+    alternates: {
+      languages: { en: "/en", ar: "/ar" },
+    },
+  };
+}
 
 export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params;
@@ -81,6 +96,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         <body className="min-h-full flex flex-col bg-sand text-ink">
           <NextIntlClientProvider messages={messages}>
             {children}
+            <AppToaster />
           </NextIntlClientProvider>
         </body>
       </html>

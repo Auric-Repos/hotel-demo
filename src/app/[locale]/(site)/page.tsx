@@ -4,7 +4,6 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { SITE_CONFIG } from "@/lib/constants";
 import { Hero } from "@/components/site/home/hero";
-import { Highlights } from "@/components/site/home/highlights";
 import { FeaturedRooms } from "@/components/site/home/featured-rooms";
 import { ExperiencesTeaser } from "@/components/site/home/experiences-teaser";
 import { Gallery } from "@/components/site/home/gallery";

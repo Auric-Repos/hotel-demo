@@ -3,13 +3,14 @@ import { and, eq, sql } from "drizzle-orm";
 import { db } from "@/server/db";
 import { bookings, rooms, type Booking, type BookingStatus } from "@/server/db/schema";
 import { createBookingSchema } from "@/lib/schemas/booking";
+import { randomInt } from "node:crypto";
 
 const REFERENCE_ALPHABET = "23456789ABCDEFGHJKLMNPQRSTUVWXYZ";
 
 function generateReference(): string {
   let ref = "AUR-";
   for (let i = 0; i < 6; i++) {
-    const idx = Math.floor(Math.random() * REFERENCE_ALPHABET.length);
+        const idx = randomInt(REFERENCE_ALPHABET.length);
     ref += REFERENCE_ALPHABET[idx];
   }
   return ref;

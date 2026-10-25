@@ -222,7 +222,7 @@ export async function SiteFooter({ locale }: { locale: string }) {
                   </span>
                 </a>
               </li>
-              {SITE_CONFIG.address !== "" && (
+              {SITE_CONFIG.address && (
                 <li className="flex items-start gap-3 text-sm text-sand/70">
                   <span className={cn(iconBox, "group-hover:border-sand/15")}>
                     <MapPinIcon aria-hidden className="size-4" />

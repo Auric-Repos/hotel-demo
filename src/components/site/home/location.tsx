@@ -54,7 +54,7 @@ export async function Location({ locale }: { locale: string }) {
                   {t("home.location.title")}
                 </h2>
 
-                {SITE_CONFIG.address !== "" && (
+                {SITE_CONFIG.address && (
                   <p className="mt-6 flex items-start gap-3 text-base leading-relaxed text-foreground">
                     <span className="mt-0.5 inline-flex size-9 shrink-0 items-center justify-center rounded-full border border-primary/40 bg-primary/10 text-primary">
                       <MapPinIcon aria-hidden className="size-4" />

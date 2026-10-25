@@ -85,39 +85,6 @@ export async function SiteFooter({ locale }: { locale: string }) {
   return (
     <footer className="section-bento section-bento-dark border-t border-gold/30 bg-charcoal text-sand">
       <div className="mx-auto w-full max-w-7xl px-4 pt-16 pb-8 sm:px-6 md:pt-20 lg:px-8">
-        {/* CTA band */}
-        <div
-          className={cn(
-            "flex flex-col gap-8 rounded-3xl border border-sand/15 bg-sand/5 p-8 backdrop-blur-md",
-            "md:flex-row md:items-center md:justify-between md:p-12",
-          )}
-        >
-          <div className="max-w-xl">
-            <p className="font-heading text-3xl leading-tight text-balance text-sand md:text-4xl">
-              {t("home.cta.title")}
-            </p>
-            <p className="mt-3 leading-relaxed text-pretty text-sand/70">
-              {t("home.cta.body")}
-            </p>
-          </div>
-
-          <Link
-            href="/book"
-            className={cn(
-              "btn-shine group inline-flex h-12 shrink-0 items-center justify-center gap-2 rounded-xl px-8",
-              "bg-primary text-base font-semibold text-primary-foreground shadow-md",
-              "transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary/30",
-              "active:translate-y-0 active:scale-[0.98]",
-              "motion-reduce:transition-none motion-reduce:hover:translate-y-0",
-              focusRing,
-            )}
-          >
-            <span>{t("home.cta.request")}</span>
-            <span className="inline-flex rtl:-scale-x-100" aria-hidden>
-              <ArrowRightIcon className="size-4 transition-transform duration-300 group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0" />
-            </span>
-          </Link>
-        </div>
 
         {/* Columns */}
         <div className="mt-16 grid gap-12 md:grid-cols-2 lg:grid-cols-12">

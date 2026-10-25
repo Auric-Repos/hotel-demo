@@ -13,7 +13,7 @@ export async function getCurrentTenant() {
   return {
     id: DEMO_TENANT_ID,
     slug: DEFAULT_TENANT_SLUG,
-    name: "Demo Hotel Aswan",
+    name: "Auric Hotel Aswan",
     whatsappNumber: "201104328077",
     contactEmail: "auricdevs@gmail.com",
     defaultLocale: "en" as const,

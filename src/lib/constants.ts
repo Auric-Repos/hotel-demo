@@ -14,7 +14,7 @@ import {
  * WhatsApp number: digits only, with country code, no "+" (used in wa.me links).
  */
 export const SITE_CONFIG = {
-  name: "Demo Hotel Aswan",
+  name: "Auric Hotel Demo",
   tagline: "A quiet stay on the Nile",
   whatsappNumber: "201104328077", // TODO: replace with the hotel's real number
   email: "auricdevs@gmail.com", // TODO: replace

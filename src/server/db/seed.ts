@@ -51,7 +51,7 @@ export async function seed() {
   await db.insert(schema.tenants).values({
     id: DEMO_TENANT_ID,
     slug: DEFAULT_TENANT_SLUG,
-    name: "Demo Hotel Aswan",
+    name: "Auric Hotel Demo",
     defaultLocale: "en",
     whatsappNumber: "201104328077",
     contactEmail: "auricdevs@gmail.com",

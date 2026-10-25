@@ -202,6 +202,34 @@
       "request": "Request your stay"
     }
   },
+  "contact": {
+      "meta": {
+        "title": "Contact — {name}",
+        "description": "Reach the hotel by WhatsApp, phone or email, and find us on the map."
+      },
+      "title": "Contact",
+      "subtitle": "The fastest way to reach us is WhatsApp.",
+      "unavailable": "Contact details will be available soon.",
+      "whatsapp": { "cta": "Chat with us on WhatsApp" },
+      "call": "Call",
+      "email": "Email",
+      "hours": "Reception",
+      "address": "Address",
+      "location": {
+        "title": "Find us",
+        "directions": "Get directions",
+        "mapTitle": "Map showing the hotel's location"
+      },
+      "form": {
+        "title": "Send a message",
+        "subtitle": "Your message opens in WhatsApp, ready to send.",
+        "name": "Your name",
+        "message": "Your message",
+        "send": "Continue on WhatsApp",
+        "required": "Please enter your name and message.",
+        "prefill": "Hello {hotel}, this is {name}.\n\n{message}"
+      }
+    },
   "book": {
     "title": "Reserve your stay",
     "subtitle": "Choose your dates and we will show you the rooms available for your party.",

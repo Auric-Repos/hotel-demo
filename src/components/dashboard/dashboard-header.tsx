@@ -11,6 +11,8 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
+import { LanguageSwitcher } from "@/components/site/language-switcher";
+
 import { SITE_CONFIG } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
@@ -104,6 +106,10 @@ export function DashboardHeader() {
 
         {/* Actions */}
         <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+           <LanguageSwitcher
+            collapseOnMobile
+            className="border border-border/70 bg-card/70 hover:border-primary/60 hover:bg-primary/5"
+          />
           <a
             href={`/${locale}`}
             target="_blank"

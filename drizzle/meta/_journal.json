@@ -15,6 +15,13 @@
       "when": 1792344234311,
       "tag": "0001_booking_integrity",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1792918206661,
+      "tag": "0002_fresh_mulholland_black",
+      "breakpoints": true
     }
   ]
 }

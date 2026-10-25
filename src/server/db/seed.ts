@@ -7,6 +7,7 @@ import { drizzle } from "drizzle-orm/neon-http";
 import { eq } from "drizzle-orm";
 import * as schema from "./schema";
 import { DEFAULT_TENANT_SLUG, DEMO_TENANT_ID } from "../../lib/tenant";
+import { tenantContact } from "@/server/db/schema";
 
 const connectionString =
   process.env.DATABASE_URL_UNPOOLED ||
@@ -52,8 +53,8 @@ export async function seed() {
     slug: DEFAULT_TENANT_SLUG,
     name: "Demo Hotel Aswan",
     defaultLocale: "en",
-    whatsappNumber: "201000000000",
-    contactEmail: "reservations@demohotelaswan.com",
+    whatsappNumber: "201104328077",
+    contactEmail: "auricdevs@gmail.com",
     currency: "USD",
     timezone: "Africa/Cairo",
     modules: {
@@ -568,8 +569,22 @@ export async function seed() {
       status: "closed",
     },
   ];
-
   await db.insert(schema.inquiries).values(sampleInquiries);
+
+await db
+  .insert(tenantContact)
+  .values({
+    tenantId: DEMO_TENANT_ID,
+    phone: "+20 110 432 8077",
+    whatsapp: "+20 110 432 8077",
+    email: "auricdevs@gmail.com",
+    addressEn: "Corniche El Nile, Aswan, Egypt",
+    addressAr: "كورنيش النيل، أسوان، مصر",
+    hoursEn: "Reception open 24 hours",
+    hoursAr: "الاستقبال متاح على مدار الساعة",
+    mapQuery: "Corniche El Nile, Aswan, Egypt",
+  })
+  .onConflictDoNothing();
 
   console.log("Seed complete! 1 tenant, 6 rooms, 6 experiences, 15 bookings, 4 inquiries.");
 }

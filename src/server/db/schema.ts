@@ -185,6 +185,23 @@ export const inquiries = pgTable(
   (table) => [index("inquiries_tenant_id_idx").on(table.tenantId)]
 );
 
+export const tenantContact = pgTable("tenant_contact", {
+  tenantId: uuid("tenant_id")
+    .primaryKey()
+    .references(() => tenants.id, { onDelete: "cascade" }),
+  phone: text("phone"),
+  whatsapp: text("whatsapp"), // any format, e.g. "+20 100 000 0000"
+  email: text("email"),
+  addressEn: text("address_en"),
+  addressAr: text("address_ar"),
+  hoursEn: text("hours_en"), // e.g. "Reception open 24 hours"
+  hoursAr: text("hours_ar"),
+  // What Google Maps should search for: "Hotel Name, Aswan" or "24.0889,32.8998".
+  // One field drives both the embedded map and the directions link.
+  mapQuery: text("map_query"),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
 export type Tenant = InferSelectModel<typeof tenants>;
 export type NewTenant = InferInsertModel<typeof tenants>;
 

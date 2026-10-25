@@ -16,9 +16,9 @@ import {
 export const SITE_CONFIG = {
   name: "Demo Hotel Aswan",
   tagline: "A quiet stay on the Nile",
-  whatsappNumber: "201000000000", // TODO: replace with the hotel's real number
-  email: "reservations@example.com", // TODO: replace
-  address: "", // TODO: replace with the hotel's street address
+  whatsappNumber: "201104328077", // TODO: replace with the hotel's real number
+  email: "auricdevs@gmail.com", // TODO: replace
+  address: "Aswan Island", // TODO: replace with the hotel's street address
   mapsUrl: "", // TODO: replace with the hotel's Google Maps share link
   facebookUrl: "", // TODO: replace with the hotel's Facebook page
   instagramUrl: "", // TODO: replace with the hotel's Instagram profile
